@@ -1,0 +1,79 @@
+*{
+    /* 모든 html 태그 */
+
+    }
+    body, html {
+        width: 100%;
+        height: 100%;
+        font-family: 'Noto Sans KR', sans-serif;
+        font-weight: bold;
+        /* font-weight: 100, 200, 300, 400, 500, 600, 700, normal, bold */
+    }
+.test1 {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(250, 250, 250);
+  display: flex;
+  flex-direction: column;
+  /* 행 위아래 이동 flex-start, flex-end */
+  justify-content: center;
+  align-items: center;
+  /* 열 좌우 이동 */
+   }
+.test2 {
+  width: 480px;
+  height: 320px;
+  background-color: #ffffff;
+  padding: 20px 15px;
+  /* 위,아래,좌우 한번에 작성 
+    padding-top: 20px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    margin과 padding 속성은 각각 바깥쪽 여백, 안쪽 여백을 의미
+    */
+    background-image: url('./실습3.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+h1 {
+    font-size: 16px;
+    color: #333333;
+    text-align: center;
+    margin-top: 20px;
+             }
+
+.test4 {
+display: flex;
+/* 자동으로 설정, 화면에 맞게 */
+
+}
+
+/* .test4 > input::placeholder{
+color: orange;
+} */
+
+.test4 > input{
+width: 100%;
+height: 42px;
+border: 1px solid red;
+/* 태그의 테두리를 설정하는 속성 */
+border-radius: 8px;
+/*  바깥 테두리 경계의 모서리를 둥글게 */
+margin-bottom: 10px;
+padding-top: 5px;
+padding-bottom: 5px;
+padding-left: 15px;
+padding-right: 15px;
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+/* 그림자 x축 방향/ 그림자 y축 방향/ 그림자 blur 효과/ 그림자 색상 */
+text-decoration: none;
+outline: none;
+cursor: pointer;
+}
+
+.test4 > input:hover {
+background-color: blue;
+
+}

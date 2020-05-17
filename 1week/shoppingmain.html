@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <link href="https://fonts.googleapis.com/css?family=Stylish&amp;display=swap" rel="stylesheet">
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+  <title>스파르타코딩클럽 | 부트스트랩 연습하기</title>
+
+  <style>
+    * {
+      font-family: 'Stylish', sans-serif;
+    }
+    .wrap {
+        margin: 0 auto;
+        width: 700px;
+}
+    .main_image {
+        width: auto;
+        height: 320px;
+  /* 위,아래,좌우 한번에 작성 
+    padding-top: 20px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    margin과 padding 속성은 각각 바깥쪽 여백, 안쪽 여백을 의미
+    */
+    background-image: url('./실습3.jpg');
+    background-repeat: no-repeat;
+    /* background-size: cover; */
+    background-position: center;
+    margin: 40px auto;
+}
+.product_main {
+      max-width: 580px;
+      border: 3px solid #000;
+      border-radius: 50px;
+      padding: 20px;
+      margin: auto;
+}
+    .product_title {
+        color: blue;
+        font-weight: bold;
+        font-size: xx-large;
+}
+    .product_price {
+        color:black;
+        font-weight: bold;
+}
+    .product_description {
+        color: black
+        font-weight: bold;
+        font-size: large;
+}
+    .info {
+        width: auto;
+        height: 320px;
+        margin: 100px auto;
+}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="main_image"></div>
+    <div class="product_main">
+        <span class="product_title">상품 팝니다.</span>
+        <span class="product_price">가격: 100,000원 / 개</span>
+        <br> </br>
+        <p class="product_description">이 상품으로 말할 것 같으면 최고의 상품으로 누구에게도 없는 좋은 상품입니다. 좋아요~ 
+            이 상품으로 말할 것 같으면 최고의 상품으로 누구에게도 없는 좋은 상품입니다. 좋아요~</p>
+    </div>
+    <div class="info">
+        <p> 사용자 성명: <input type="text" /></p>
+        <p> 수량: 
+            <select onchange="categoryChange(this)">
+            <option>선택하세요</option>
+            <option value="a">10</option>
+            <option value="b">20</option>
+            <option value="c">30</option>
+          </select>
+        </p>
+        <p> 주소: <input type="text" /></p>
+        <p> 전화번호: <input type="text" /></p>
+        <button> 주문하기 </button>
+    </div>
+</div>
+
+    <!-- <div class="card-columns">
+      <div class="card" style="width: 18rem;">
+        <img src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+          <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+          <p class="comment">여기에 코멘트가 들어갑니다.</p>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <img src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+          <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+          <p class="comment">여기에 코멘트가 들어갑니다.</p>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <img src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+          <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+          <p class="comment">여기에 코멘트가 들어갑니다.</p>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <img src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+          <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+          <p class="comment">여기에 코멘트가 들어갑니다.</p>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <img src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+          <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+          <p class="comment">여기에 코멘트가 들어갑니다.</p>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <img src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+          <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+          <p class="comment">여기에 코멘트가 들어갑니다.</p>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <img src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+          <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+          <p class="comment">여기에 코멘트가 들어갑니다.</p>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <img src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+          <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+          <p class="comment">여기에 코멘트가 들어갑니다.</p>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <img src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+          <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+          <p class="comment">여기에 코멘트가 들어갑니다.</p>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <img src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+          <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+          <p class="comment">여기에 코멘트가 들어갑니다.</p>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

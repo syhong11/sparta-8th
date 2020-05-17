@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- google font -->
+  <link href="https://fonts.googleapis.com/css?family=Stylish&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Gothic+Coding:wght@700&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+  <title>스파르타코딩클럽 | 쇼핑몰 연습하기</title>
+
+  <style>
+    * {
+      /* font-family: 'Stylish', sans-serif; */
+      font-family: 'Noto Sans KR', sans-serif;
+      /* font-family: 'Gamja Flower', cursive; */
+      /* font-family: 'Nanum Gothic Coding', monospace; */
+}
+    .wrap {
+        margin: 20px auto;
+        width: 800px;
+ }
+    .main_image {
+        width: auto;
+        height: 520px;
+        background-image: url('https://image.msscdn.net/images/prd_img/20190517/1048838/detail_1048838_1_500.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        margin-bottom: 40px;
+}
+    .product_main {
+        max-width: 580px;
+        border: 3px solid #000;
+        border-radius: 50px;
+        padding: 20px;
+        margin: auto;
+}
+    .product_title {
+        color: blue;
+        font-weight: bold;
+        font-size: xx-large;
+}
+    .product_description {
+        color: gray;
+        /* font-weight: bold; */
+        font-size: x-large;
+}
+    .info {
+        width: 480px;
+        height: 300px;
+        padding: 15px;
+        margin: 20px auto;
+}
+    .button_order {
+      margin: 0 auto;
+      width: 300px;
+      padding: 10px;
+}      
+  </style>
+      <script>
+         function showAlert(){
+          if (confirm("해당 상품을 주문하시겠습니까? ")) {
+                // 확인 버튼 클릭 시 동작
+                alert("주문이 완료되었습니다.");
+            } else {
+                // 취소 버튼 클릭 시 동작
+                alert("주문이 취소되었습니다.");
+            }
+         }
+      </script>
+</head>
+
+<body>
+<div class="wrap">
+    <div class="main_image"></div>
+    <div class="product_main">
+    <h1 class="product_title" >상품 판매합니다. 
+            <span class="product_price" style="color: black; font-size: initial; font: bold; padding-left: 150px;">가격: 2,000원/장
+            </span>
+        </h1>
+        <br>
+        <p class="product_description" style="font-size: large;">해당 마스크는 최고 품질의 마스크 상품으로 어느 누구에게도 잘~ 어울리는 마스크입니다. 마스크 성능 또한 최상의 품질/성능이라 자부합니다. 최고의 마스크 저렴한 가격으로 구매하세요. </p>
+    </div>
+    <form>
+    <div class="info">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">구매자 성명</span>
+         </div>
+          <input type="text" class="form-control" aria-label="구매자 성명" aria-describedby="inputGroup-sizing-default">
+        </div>
+       <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">수량</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01">
+              <option selected>****수량을 선택하세요****</option>
+              <option value="1">5</option>
+              <option value="2">10</option>
+              <option value="3">20</option>
+              <option value="4">50</option>
+            </select>
+        </div>
+     <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">주소</span>
+            </div>
+            <input type="text" class="form-control" aria-label="주소" aria-describedby="inputGroup-sizing-default">
+        </div>  
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">전화번호</span>
+        </div>
+        <input type="text" class="form-control" aria-label="전화번호" aria-describedby="inputGroup-sizing-default">
+      </div>
+    <div class="button_order">
+        <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="showAlert()">주문하기</button>
+      </div>
+      </form>
+  </div>
+
+</body>
+
+</html>

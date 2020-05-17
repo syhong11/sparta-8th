@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스파르타코딩클럽</title>
+
+    <style>
+        .test1
+        {
+            color: blueviolet;
+                  }    
+      #id_test1 
+      {
+                      color:brown
+                  }        
+     .test2, .test3{
+         background-color: chartreuse;
+     }
+     .teste2 > div {/* > 사용시 clas가 test2인 태그 바로 아래 자식 div 태그 영향*/
+        /* > 사용하지 않을시 class가 test2인 태그 아래 모든 자식 div 태그 영향(손자 태그 포함)*/}
+    
+     .teste2 > div {/* > 사용시 clas가 test2인 태그 바로 아래 자식 div 태그 영향*/
+     /* > 사용하지 않을시 class가 test2인 태그 아래 모든 자식 div 태그 영향(손자 태그 포함)*/}
+     #id_test2 > div input[type=password] {
+
+         /*id가 id_test2 바로 아래 div태그 type이 pass인 input자식 태그*/
+     }
+     .test1.test2 {/*class가 test1과 test2 모두 가지고 있는 태그*/}
+     background-attachment: fixed;
+     
+  
+    </style>
+</head>
+
+<body>
+
+   
+    <div>
+        <h1>로그인 페이지</h1>
+        <p> ID: <input type="text" /></p>
+        <p> PW: <input type="text" /></p>
+    <button> 로그인하기 </button>
+    </div>
+    <!-- 선택자 selector -->
+    <!-- id는 유니크 한 값으로 -->
+    <!-- class는 재사용이 가능 -->
+      <div class="test1,test2,test3" id="s">
+
+
+      </div>
+</body>
+
+</html>

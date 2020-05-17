@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- ajax는 jquery 필요 -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        // type: api 요청 종류
+      // method: GET, POST, PATCH, PUT, DELETE
+      // GET: 데이터를 조회
+      // POST: 데이터를 생성
+      // PATCH: 데이터를 일부 수정
+      // PUT: 데이터를 전체 수정
+      // DELETE: 데이터 삭제
+      // 해당 method는 반드시 지킬 필요가 없다
+      // 이번 강의는 GET(데이터 조회), POST(데이터 생성, 수정, 삭제)
+
+      // 양식 : url , header, body
+      // GET: url, header만 사용
+      // POST: url, header, body 모두 사용
+
+      // 클라(브라우저)가 서버한테 데이터를 줄 때
+      // GET: url
+      // ex) naver.com?username=springkjw&passowrd=123456
+
+      // POST: body에 데이터를 담아서 전송
+      // ex) naver.com
+      // body : {username: springkjw, password: 123456}
+
+
+        function test() {
+            $.ajax({
+                type: "GET", // GET 방식으로 요청한다.
+                url: "http://openapi.seoul.go.kr:8088/6d4d776b466c656533356a4b4b5872/json/RealtimeCityAir/1/99",
+                data: {}, // 요청하면서 함께 줄 데이터 (GET 요청시엔 비워두세요)
+                success: function (response) { // 서버에서 준 결과를 response라는 변수에 담음
+                    // console.log(response) // 서버에서 준 결과를 이용해서 나머지 코드를 작성
+                    let data = response["RealtimeCityAir"];
+                    let result = data["row"];
+                    console.log(result);
+                    $('#data-box').empty();
+                    for(let i = 0; i < result.length; i++){
+                        let gu = result[i]["MSRSTE_NM"];
+                        let mise = result[i]["IDEX_MVL"];
+
+                        // console.log(gu, mise);
+                        let html = `<li>${gu} : ${mise}</li> `;
+                        $('#data-box').append(html);
+                    }
+                },
+                error: function (error) {   // 서버에서 문제가 발생해서 정상값이 응답 안 올 때
+                    console.log(error);
+                }
+            })
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <button onclick="test()">데이터 불러오기</button>
+
+    <ul id="data-box">
+
+    </ul>
+</body>
+
+</html>
