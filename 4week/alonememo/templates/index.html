@@ -49,7 +49,23 @@
         data: {},
         success: function (response) {
           if (response['result'] == 'success') {
-            alert(response['msg']);
+              let artilce = response['articles'];
+
+              artilce.forEach(function(article){
+                  let html = `
+                  <div class="card">
+                     <img class="card-img-top"
+                     src="${article["image"]}"
+                     alt="Card image cap">
+                    <div class="card-body">
+                     <a href="${article["url"]}" class="card-title">${article["title"]}</a>
+                    <p class="card-text">${article["desciption"]}</p>
+                    <p class="card-text comment">${article["comment"]}</p>
+                 </div>
+                  `;
+
+                  $('#cards-box').append(html);
+              })
           }
         }
       })

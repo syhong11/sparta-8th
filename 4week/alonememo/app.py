@@ -17,7 +17,8 @@ def home():
 def listing():
     # 1. 모든 document 찾기 & _id 값은 출력에서 제외하기
     # 2. articles라는 키 값으로 영화정보 내려주기
-    return jsonify({'result':'success', 'msg':'GET 연결되었습니다!'})
+    memos = list(db.alonememo.find({},{'_id': False}))
+    return jsonify({'result':'success', 'articles': memos})
 
 ## API 역할을 하는 부분
 @app.route('/memo', methods=['POST'])
