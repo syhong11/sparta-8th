@@ -39,7 +39,7 @@ for music in musics:
 
      print(rank, title, artist)
 
-     # 실행 시 매번 동일한 데이터 저장됨
+    # 실행 시 매번 동일한 데이터 저장됨
     #  db.genie.insert_one({
     #      'rank' : rank,
     #      'title' :  title,

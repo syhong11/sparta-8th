@@ -1,5 +1,5 @@
 
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -9,7 +9,8 @@ app = Flask(__name__)
 # 사용자가 접속할 수 있는 URL (https://naver.com/)
 @app.route('/')
 def home():
-    return "Hello World!"
+    # return "Hello World!"
+    return render_template('index.html')
 
 @app.route('/mypage')
 def mypage():
