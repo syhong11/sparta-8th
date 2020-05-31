@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
 
@@ -15,6 +15,39 @@ def home():
 @app.route('/mypage')
 def mypage():
     return "This is My Page"
+
+
+# API
+# url, header, body
+@app.route('/test/get/data', methods=['GET'])
+def get_data():
+    username_receive = request.args.get('username')
+    password_recsive = request.args.get('password')
+
+
+    data = {
+        'test' : 123,
+        'tset1' : True,
+        'test2' : '스파르타'
+    }
+
+    if password_recsive == '1234':
+        data['test1'] = False
+
+    return jsonify(data)
+
+@app.route('/test/post/data', methods=['POST'])
+def post_data():
+    username_receive = request.form['username']
+    password_recsive = request.form['password']
+
+    print(username_receive, password_recsive)
+
+    data = {
+        'success': True
+    }
+    return jsonify(data)
+
 
 # __name__ : 해당 파이썬 파일이 실행되는 위치
 # __name__ == '__main__'

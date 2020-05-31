@@ -1,3 +1,30 @@
 $(document).ready(function(){
-    alert('자바스크립트 파일이 실행되었어요')
+    load();
 });
+
+
+function load() {
+    $.ajax({
+        url: '/test/get/data?username=sparta@password=1234',
+        type: 'GET',
+        data: {},
+        success: function(response){
+            console.log(response);
+        }
+    })    
+}
+
+
+function postData(){
+    $.ajax({
+        url: '/test/post/data',
+        type: 'POST',
+        data: {
+            username: 'sparta',
+            password: 1235
+        },
+        success: function(response){
+            console.log(response);
+        }
+    })
+}
