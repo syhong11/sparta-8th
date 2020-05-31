@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>Document</title>
+
+    <link rel="stylesheet"href="{{url_for('static', filename='css/index.css')}}"/>
+    <script src="{{url_for('static', filename='js/index.js')}}"></script>
+
 </head>
 <body>
     <h1>서버를 만들었다!</h1>
     <img src="{{url_for('static', filename='rome.jpg')}}"/>
+    <!-- static : 정적 파일의 url 주소 -->
+    <!-- filename: static 폴더 안의 상대 경로를 넣기 -->
+    <!-- 만약 경로가 잘못 되었거나 파일이 없다면 404 -->
 </body>
 </html>
