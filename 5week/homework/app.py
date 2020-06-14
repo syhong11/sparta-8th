@@ -6,9 +6,11 @@ db = client.dbsparta
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def home():
     return render_template('index.html')
+
 
 @app.route('/order', methods=['POST'])
 def order_create():
@@ -26,13 +28,14 @@ def order_create():
 
     return jsonify({'result': 'success'})
 
+
 @app.route('/order', methods=['GET'])
-def order_reccive():
-    orders = list(db.candle.find({}, {'_id':False}))
+def order_retreive():
+    orders = list(db.candle.find({}, {'_id': False}))
 
     return jsonify({
-        'result' : 'success',
-        'orders' : orders
+        'result': 'success',
+        'orders': orders
     })
 
 
