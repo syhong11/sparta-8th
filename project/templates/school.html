@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>내 주변 어린이 보호 구역 확인하기</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=39c03869439dbb5ecd0e6ff05d1b4d9d&libraries=services"></script>
+    <!-- alert 추가 -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <style>
+        .wrap {
+            margin: 20px auto;
+            width: auto;
+        }
+
+        .search {
+            margin: 20px auto;
+            width: 480px;
+        }
+
+        .info {
+            width: 100px;
+            height: 300px;
+            padding: 15px;
+            margin: 20px auto;
+        }
+
+        .swal-button {
+            font-size: 20px;
+            text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+
+    <script>
+        function openclose() {
+            let display = $('#map').css('display');
+            if (display === 'none') {
+                $('#map').show();
+                $('#map-box').text("내 위치 찾기 닫기");
+                $('#map-box').css({ 'color': 'white' });
+            } else {
+                $('#map').hide();
+                $('#map-box').text('내 위치 찾기');
+                $('#map-box').css({ 'color': 'white' });
+            }
+        }
+    </script>
+
+    <script>
+        var currentPosition;
+        var map;
+        var region;
+
+        // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+        var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+
+        $(document).ready(function () {
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                mapOption = {
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };
+
+            // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+            map = new kakao.maps.Map(mapContainer, mapOption);
+            getPositon();
+
+            // 지도에 교통정보를 표시하도록 지도타입을 추가합니다
+            map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+
+            // 아래 코드는 위에서 추가한 교통정보 지도타입을 제거합니다
+            // map.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+
+            // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+            if (navigator.geolocation) {
+
+                // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+                navigator.geolocation.getCurrentPosition(function (position) {
+
+                    var lat = position.coords.latitude, // 위도
+                        lon = position.coords.longitude; // 경도
+
+                    var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+                        message = '<div style="padding:5px";>지금 내 위치~~</div>'; // 인포윈도우에 표시될 내용입니다
+
+                    // 마커와 인포윈도우를 표시합니다
+                    displayMarker(locPosition, message);
+
+                });
+
+            } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+
+                var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
+                    message = 'geolocation을 사용할수 없어요..'
+
+                displayMarker(locPosition, message);
+            }
+
+            var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
+                imageSize = new kakao.maps.Size(44, 49), // 마커이미지의 크기입니다
+                imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+            // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+            function displayMarker(locPosition, message) {
+                // 마커를 생성합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: locPosition,
+                    image: markerImage
+                });
+
+                var iwContent = message, // 인포윈도우에 표시할 내용
+                    iwRemoveable = true;
+
+                // 인포윈도우를 생성합니다
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: iwContent,
+                    removable: iwRemoveable
+                });
+
+                // 인포윈도우를 마커위에 표시합니다 
+                infowindow.open(map, marker);
+
+                // 지도 중심좌표를 접속위치로 변경합니다
+                map.setCenter(locPosition);
+            }
+        })
+
+        function getPositon() {
+            if (navigator.geolocation) {
+                // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+                navigator.geolocation.getCurrentPosition(function (position) {
+
+                    var lat = position.coords.latitude, // 위도
+                        lon = position.coords.longitude; // 경도
+
+                    currentPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+                    map.setCenter(currentPosition)
+                    convertRegion(lat, lon)
+                });
+
+            }
+        }
+
+        function convertRegion(lat, lon) {
+            var geocoder = new kakao.maps.services.Geocoder();
+            var callback = function (result, status) {
+                console.log(result, status)
+                if (status === kakao.maps.services.Status.OK) {
+                    region = result[0].region_1depth_name;
+                    listing()
+                }
+            };
+            geocoder.coord2RegionCode(lon, lat, callback);
+        }
+
+        function listing() {
+            let data = {};
+            if (region) {
+                data = Object.assign(data, { region_give: region })
+            }
+            $.ajax({
+                url: '/api/list',
+                type: 'GET',
+                data: data,
+                success: function (response) {
+                    if (response['result'] === 'success') {
+                        const { school } = response;
+
+                        school.forEach(function (item) {
+                            const { Latitude, Longitude } = item;
+                            var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', // 마커이미지의 주소입니다    
+                                imageSize = new kakao.maps.Size(24, 35), // 마커이미지의 크기입니다
+                                imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+                            // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+                            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+                                // 마커가 표시될 위치입니다 
+                                markerPosition = new kakao.maps.LatLng(Latitude, Longitude)
+
+                            // 마커를 생성합니다
+                            var marker = new kakao.maps.Marker({
+                                position: markerPosition,
+                                image: markerImage // 마커이미지 설정                             
+                            });
+
+                            // 마커가 지도 위에 표시되도록 설정합니다
+                            marker.setMap(map);
+
+                        })
+                    }
+                }
+            })
+        }
+
+        // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+        function displayMarker(locPosition, message) {
+
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: locPosition
+            });
+
+            var iwContent = message, // 인포윈도우에 표시할 내용
+                iwRemoveable = true;
+
+            // 인포윈도우를 생성합니다
+            var infowindow = new kakao.maps.InfoWindow({
+                content: iwContent,
+                removable: iwRemoveable
+            });
+
+            // 인포윈도우를 마커위에 표시합니다 
+            infowindow.open(map, marker);
+
+            // 지도 중심좌표를 접속위치로 변경합니다
+            map.setCenter(locPosition, message);
+        }
+
+        // 장소 검색 객체를 생성합니다
+        var ps = new kakao.maps.services.Places();
+
+        function searchLocation() {
+            var loc = $("#searchLoc").val();
+            if (!loc.replace(/^\s+|\s+$/g, '')) {
+                swal("검색 실패!", "키워드를 입력해주세요!");
+                return false;
+            }
+            ps.keywordSearch(loc, placesSearchCB);
+        }
+
+        function placesSearchCB(data, status, pagination) {
+            if (status === kakao.maps.services.Status.OK) {
+
+                // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                // LatLngBounds 객체에 좌표를 추가합니다
+                var bounds = new kakao.maps.LatLngBounds();
+
+                for (var i = 0; i < data.length; i++) {
+                    displayMarker(data[i]);
+                    bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+                }
+                // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                map.setBounds(bounds);
+            }
+        }
+
+        // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+        function displayMarker(place) {
+
+            // 마커를 생성합니다
+            var searchmarker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(place.y, place.x)
+            });
+
+            // 마커에 클릭이벤트를 등록합니다
+            kakao.maps.event.addListener(searchmarker, 'click', function () {
+                // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+                infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+                infowindow.open(map, searchmarker);
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="jumbotron">
+            <h1 class="display-4">어린이 보호 구역 확인</h1>
+            <p class="lead">내 주위에 어린이 보호 구역(학교, 어린이집 등)을 확인할 수 있는 공간입니다.</p>
+            <span>* 페이지 시작 시 내 위치 정보를 확인하고자 권한을 요청 할 수 있습니다. 권한 요청 시</span>
+            <span style="color: red; font-weight: bold; font-size: initial;">"허용"</span>
+            <span>으로 내 위치 확인해주세요!</span><br>
+            <span>추가로 현 위치를 표시해 주는 geolocation 기능은 부정확할 수 있으니 참고해 주세요.</span>
+            <hr class="my-4">
+            <span>*</span> <span style="color: red; font-weight: bold; font-size: initial;">검색</span>
+            <span>을 통해 다른 위치의</span> <span style="font-weight: blod;">어린이 보호 구역</span>도 확인 할 수 있습니다.</span>
+            <hr class="my-4">
+            <h6 style="color: royalblue; font-weight: bold;">* 지도 내 마커 종류</h6>
+            <P>
+                <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png" height="35"
+                    width="34" />
+                <span style="text-align:left; font-size: small;">: 현 위치를 알려주는 마커</span>
+                <img src="http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png" height="35"
+                    width="24" />
+                <span style="text-align:left; font-size: small;">: 어린이보호구역 마커</span>
+                <img src="http://t1.daumcdn.net/mapjsapi/images/2x/marker.png" height="35" width="24" />
+                <span style="text-align:left; font-size: small;">: 검색결과 마커</span>
+            </P>
+            <p class="lead">
+                <button id="map-box" onclick="openclose()" class="btn btn-primary btn-sm">내 위치 지도 닫기</button>
+            </p>
+        </div>
+    </div>
+    <div class="search">
+        <div clsaa="info">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">검색어 입력</span>
+                </div>
+                <input type="text" class="form-control" aria-describedby="inputGroup-sizing-default"
+                    id="searchLoc"><button class="btn btn-secondary btn-md" onclick="searchLocation();">검색</button>
+            </div>
+        </div>
+    </div>
+    <!-- 지도를 표시할 div 입니다 -->
+    <div id="map" style="width: 100%; height: 800px;">
+        <!-- display : none 시 지도 이미지 깨지는 -->
+
+    </div>
+</body>
+
+</html>
